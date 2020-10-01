@@ -13,7 +13,7 @@ services:
         ports:
             - "8000:80"
         volumes:
-            - ./lessclick:/var/www/html
+            - ./src:/var/www/html
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on: 
             - php
@@ -45,12 +45,11 @@ services:
             - laravel
         # container_name: php
         volumes:
-            - ./lessclick:/var/www/html
+            - ./src:/var/www/html
             - ./supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
             - ./supervisor/horizon.conf:/etc/supervisor/conf.d/horizon.conf
         ports:
             - "9000:9000"
-        # command: bash -c "php artisan horizon"
         depends_on: 
             - mysql
             - redis
