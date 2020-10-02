@@ -14,9 +14,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pcntl pdo pdo_mysql zip
 
-# # # @TODO: ver pq tá dando erro
-# # RUN docker-php-ext-install libsodium intl 
-
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html/src
@@ -26,14 +23,11 @@ COPY ./src/composer*.json ./
 
 WORKDIR /var/www/html/
 
-RUN mkdir /var/www/html/supervisor
-
-RUN touch /var/www/html/supervisor/supervisord.log
-
 # Create the log file to be able to run tail
-RUN touch /tmp/logs/cron.log
+RUN touch /tmp/cron.log
 
 # Setup cron job
-RUN (crontab -l ; echo "* * * * * cd /var/www/html && /usr/local/bin/php artisan compute:tickets >> /tmp/logs/cron.log") | crontab
+RUN (crontab -l ; echo "* * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /tmp/cron.log") | crontab
+
 
 RUN update-rc.d cron enable

@@ -9,7 +9,6 @@ services:
         networks: 
             - laravel
         image: nginx:stable-alpine
-        # container_name: webserver
         ports:
             - "8000:80"
         volumes:
@@ -20,7 +19,6 @@ services:
 
     mysql:
         image: mysql:5.7.22
-        # container_name: database
         restart: unless-stopped
         networks: 
             - laravel
@@ -43,11 +41,8 @@ services:
             dockerfile: Dockerfile
         networks:
             - laravel
-        # container_name: php
         volumes:
             - ./src:/var/www/html
-            - ./supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
-            - ./supervisor/horizon.conf:/etc/supervisor/conf.d/horizon.conf
         ports:
             - "9000:9000"
         depends_on: 
