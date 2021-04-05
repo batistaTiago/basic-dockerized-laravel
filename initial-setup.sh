@@ -2,8 +2,8 @@
 docker-compose build;
 docker-compose up -d;
 
-# git checkout into correct branch
 
-docker-compose exec php composer install;
-docker-compose exec php npm install;
-docker-compose exec php service cron start;
+docker-compose exec php bash -c "composer install";
+docker-compose exec php bash -c "npm install";
+docker-compose exec php bash -c "service cron start";
+docker-compose exec php bash -c "php artisan key:generate";
